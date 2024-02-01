@@ -1,0 +1,27 @@
+<input type="text" id="inputVal">
+<button onclick="add()">Add</button>
+<ul id="ul-container"></ul>
+
+<script>
+    const ul = document.getElementById("ul-container");
+
+    function add() {
+        const inputValue = document.getElementById("inputVal").value;
+        const li = document.createElement("li");
+        li.innerHTML = `${inputValue} <button onclick="editItem(this)">Edit</button> <button onclick="deleteItem(this)">Delete</button>`;
+        ul.appendChild(li);
+    }
+
+    function editItem(button) {
+        const li = button.parentElement;
+        const text = li.firstChild.textContent;
+        const newValue = prompt("Enter new value:", text);
+        if (newValue !== null) {
+            li.firstChild.textContent = newValue;
+        }
+    }
+
+    function deleteItem(button) {
+        button.parentElement.remove();
+    }
+</script>
