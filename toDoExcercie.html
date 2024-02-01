@@ -143,7 +143,7 @@
 
 
 
-        <table id="table-container">
+        <table id="table-container" style="display: none;">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -198,6 +198,8 @@
             deleteButton.textContent = "Delete";
             deleteButton.onclick = function() { deleteItem(this); };
             cell.appendChild(deleteButton);
+
+            document.getElementById("table-container").style.display = "table"; // Display the table
         }
 
         function deleteItem(button) {
