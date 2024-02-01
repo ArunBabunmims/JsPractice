@@ -180,16 +180,38 @@
                 email: document.getElementById("email").value
             };
 
-
-            // var uppend = document.getElementById('append');
-            // uppend.innerHTML= `${userData.name}`;
-    
-            
-            console.log(userData);
             var table = document.getElementById("table-container").getElementsByTagName('tbody')[0];
-        var newRow = table.insertRow();
-        newRow.innerHTML = `<td>${userData.name}</td><td>${userData.age}</td><td>${userData.gender}</td><td>${userData.course}</td><td>${userData.email}</td><td><button onclick="editItem(this)">Edit</button><button onclick="deleteItem(this)">Delete</button></td>`;
-    }
+            var newRow = table.insertRow();
+
+            Object.values(userData).forEach(value => {
+                var cell = newRow.insertCell();
+                cell.textContent = value; // Render cell as plain text initially
+            });
+
+            var cell = newRow.insertCell();
+            var editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.onclick = function() { editItem(this); };
+            cell.appendChild(editButton);
+
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.onclick = function() { deleteItem(this); };
+            cell.appendChild(deleteButton);
+        }
+
+        function deleteItem(button) {
+            button.parentElement.parentElement.remove();
+        }
+
+        function editItem(button) {
+            var row = button.parentElement.parentElement;
+            var cells = row.cells;
+            for (var i = 0; i < cells.length - 1; i++) { // Exclude last cell containing buttons
+                var currentValue = cells[i].textContent;
+                cells[i].innerHTML = `<input type="text" value="${currentValue}">`;
+            }
+        }
     </script>
     
 </body>
