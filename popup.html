@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    .overlay{
+        background-color: black;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        opacity: 0.8;
+        position: absolute;
+        z-index: 1;
+        display: none;
+    }
+
+    .popup{
+        
+        background-color:white;
+        position: absolute;
+        width: 30%;
+        padding: 20px;
+        z-index: 2;
+        left: 30%;
+        display: none;
+    }
+
+</style>
+<body>
+    <button onclick="show()">Show</button>
+    <div class="overlay"></div>
+    <div class="popup">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, doloremque iste in nemo fugit, numquam facere id, itaque ea autem aut sint qui. Eligendi dolore optio libero laboriosam facilis? Ab.</p>
+        <button onclick="closeDiv()">Close</button>
+    </div>
+</body>
+
+<script>
+        var overlay = document.querySelector(".overlay");
+        var popup = document.querySelector(".popup");
+    function show(){
+        overlay.style.display="block";
+        popup.style.display="block";
+    }
+    function closeDiv(){
+        overlay.style.display="none";
+        popup.style.display="none";
+    }
+</script>
+</html>
