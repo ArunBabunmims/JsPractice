@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Download Excel File</title>
+</head>
+<body>
+
+<button id="downloadButton">Download Excel File</button>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<script>
+const jsonData = []
+
+  function downloadExcel() {
+    const worksheet = XLSX.utils.json_to_sheet(jsonData.map(person => {
+        let qualificationString = person.qualification.map((q, index) => {
+            return `(${index + 1}) Qualification: ${q.qualification} | Percentile: ${q.percentile !== null ? q.percentile + "%" : "N.A"}`;
+        }).join("\n");
+
+        let experienceString = person.experience.map((exp, index) => {
+            return `(${index + 1}) Organization: ${exp.organization} | Designation: ${exp.designation} | Duration : ${exp.duration}`;
+        }).join("\n");
+
+        return {
+            "Email": person.email,
+            "First Name": person.first_name,
+            "Last Name": person.last_name,
+            "Contact Number": person.contact_number,
+            "Date of Birth": person.date_of_birth,
+            "Qualification": qualificationString,
+            "Experience": experienceString
+        };
+    }));
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'data.xlsx');
+    document.body.appendChild(link);
+    link.click();
+}
+
+document.getElementById('downloadButton').addEventListener('click', downloadExcel);
+
+
+</script>
+</body>
+</html>
